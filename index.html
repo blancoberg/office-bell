@@ -1,0 +1,70 @@
+<html>
+
+	<head>
+		
+		<script src="src/howler.core.js"></script>
+	
+	</head>
+
+	<body>
+		
+		<script>
+			
+			var notes = [65.4063913251,
+			69.2956577442,
+			73.4161919794,
+			77.7817459305 ,
+			82.4068892282,
+			87.3070578583,
+			92.4986056779,
+			97.9988589954 ,
+			103.8261743950,
+			110.0000000000,
+			116.5409403795,
+			123.4708253140
+			 ]
+			
+			for(var i = 0;i<notes.length;i++){
+				notes[i] = notes[i]/80;
+			}
+			
+			var sound;
+			var rateCounter = 0;
+			var rate = notes[0];
+			(function(){
+				window.onload = function(){
+					console.log("ready")
+					sound = new Howl({
+					  src: ['sounds/bell.wav'],
+					  sprite: {
+					    start: [0,4000],
+					    end: [4000,8000]
+					    
+					  }
+					});
+					
+					
+					document.getElementById("button").onmousedown = function(){
+						//sound.
+						rate = notes[rateCounter];
+						rateCounter = rateCounter == notes.length-1 ? 0 : rateCounter+1;
+						var id = sound.play("start")
+						sound.rate(rate, id);
+					}
+					
+					document.getElementById("button").onmouseup = function(){
+						var id = sound.play("end")
+						sound.rate(rate, id);
+					}
+					// Shoot the laser!
+					//sound.play('start');
+					
+				}
+			})()
+		</script>
+		
+		<button id="button">ring</button>
+
+	</body>
+
+</html>
